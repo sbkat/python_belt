@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome</title>
+</head>
+
+<body style="margin:20px;" class="lead">
+    <p style="display:inline-block; vertical-align: top; margin-right:20px;">Hello {{ this_user.first_name }}! These are
+        your stats!</p>
+    <a href="/wishes" style="text-decoration: none; display:inline-block; vertical-align: top;">Dashboard</a> |
+    <a href="/logout" style="text-decoration: none; display:inline-block; vertical-align: top;">Log Out</a><br>
+    <p>Total wishes granted so far for all users:
+        {% for wish in all_wishes %}
+        {% for wish in wish.wishes_granted.all %}
+        |
+        {% endfor %}
+        {% endfor %}
+    </p>
+    <p>Your granted wishes:
+        {% if this_user.users_granted.all %}
+        {{this_user.users_granted.all.count}}
+        {% endif %}
+    </p>
+    <p>Your pending wishes:
+        {% for wish in all_wishes %}
+        {% if this_user.id == wish.wisher_id %}
+        {% if not this_user in wish.wishes_granted.all %}
+        |
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </p>
+
+</body>
+
+</html>

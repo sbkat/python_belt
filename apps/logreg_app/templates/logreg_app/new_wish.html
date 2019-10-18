@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Welcome</title>
+</head>
+
+<body style="margin:20px;" class="lead">
+    <p style="display:inline-block; vertical-align: top; margin-right:20px;">Hello {{ this_user.first_name }}! Make a
+        wish!</p>
+    <a href="/logout" style="text-decoration: none; display:inline-block; vertical-align: top;">Log Out</a>
+
+    <div name="error_div">
+        {% if messages %}
+        <ul class="messages" list-style-type="none;" style="color:rgb(216, 20, 20)">
+            {% for message in messages %}
+            {% if 'wish' in message.tags %} <li class="{{ message.tags }}">{{ message }}</li> {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div style="width:45vw; display: inline-block; vertical-align: top;">
+        <form action="/adding_a_wish" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="item">I wish for:</label>
+                <input type="text" class="form-control" name="item">
+                <label for="description">Description</label>
+                <textarea class="form-control" name="description"></textarea>
+                <button type="submit" class="btn btn-info" style="margin-top:5px;">Submit</button>
+                <a href="/cancel" class="btn btn-danger" style="margin-top:5px;">Cancel</a>
+            </div>
+        </form>
+</body>
+
+</html>
